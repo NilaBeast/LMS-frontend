@@ -772,3 +772,148 @@ export const aiCofounderChatApi = (message, token) =>
     data,
     authHeader(token)
   );
+
+  /* ================= COMMUNITY ================= */
+
+/* GET COMMUNITY BY BUSINESS */
+export const getCommunityApi = (businessId, token) =>
+  API.get(
+    `/api/community/${businessId}`,
+    authHeader(token)
+  );
+
+/* ================= FEED ================= */
+
+/* GET COMMUNITY FEED */
+export const getCommunityFeedApi = (communityId, token) =>
+  API.get(
+    `/api/community-post/${communityId}/feed`,
+    authHeader(token)
+  );
+
+/* CREATE POST */
+export const createCommunityPostApi = (
+  communityId,
+  data,
+  token
+) =>
+  API.post(
+    `/api/community-post/${communityId}`,
+    data,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data"
+      }
+    }
+  );
+
+  export const editCommunityPostApi = (
+  postId,
+  data,
+  token
+)=>
+  API.put(
+    `/api/community-post/post/${postId}`,
+    data,
+    {
+      headers:{
+        Authorization:`Bearer ${token}`,
+        "Content-Type":"multipart/form-data"
+      }
+    }
+  );
+
+  export const approveCommunityPostApi = (
+  postId,
+  token
+)=>
+  API.patch(
+    `/api/community-post/post/${postId}/approve`,
+    {},
+    authHeader(token)
+  );
+/* DELETE POST */
+export const deleteCommunityPostApi = (
+  postId,
+  token
+) =>
+  API.delete(
+    `/api/community-post/post/${postId}`,
+    authHeader(token)
+  );
+
+/* LIKE POST */
+export const likeCommunityPostApi = (
+  postId,
+  token
+) =>
+  API.post(
+    `/api/community-post/post/${postId}/like`,
+    {},
+    authHeader(token)
+  );
+
+/* COMMENT POST */
+export const commentCommunityPostApi = (
+  postId,
+  comment,
+  token,
+  parentId=null
+)=>
+  API.post(
+    `/api/community-post/post/${postId}/comment`,
+    { comment, parentId },
+    authHeader(token)
+  );
+
+/* ================= MEMBERS ================= */
+
+export const getCommunityMembersApi = (
+  communityId,
+  filter,
+  token
+) =>
+  API.get(
+    `/api/community/${communityId}/members?type=${filter}`,
+    authHeader(token)
+  );
+
+
+/* ================= MESSAGES ================= */
+
+/* GET MESSAGES */
+export const getCommunityMessagesApi = (
+  communityId,
+  token
+) =>
+  API.get(
+    `/api/community-message/${communityId}`,
+    authHeader(token)
+  );
+
+/* SEND MESSAGE */
+export const sendCommunityMessageApi = (
+  communityId,
+  message,
+  token
+) =>
+  API.post(
+    `/api/community-message/${communityId}`,
+    { message },
+    authHeader(token)
+  );
+
+
+/* ================= SETTINGS ================= */
+
+export const updateCommunitySettingsApi = (
+  communityId,
+  data,
+  token
+) =>
+  API.put(
+    `/api/community/${communityId}/settings`,
+    data,
+    authHeader(token)
+  );

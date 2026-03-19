@@ -54,6 +54,8 @@ import PublicMemberships from "./pages/PublicMemberships";
 import MembershipDetails from "./pages/MembershipDetails";
 import MembershipManage from "./pages/MembershipManage";
 
+/*==============COMMUNITY=================*/
+import Community from "./pages/Community";
 /*==================AI COFOUNDER=================*/
 import AICofounder from "./pages/AICofounder";
 
@@ -114,6 +116,12 @@ export default function App() {
           {/* ================= DASHBOARD ================= */}
 
           <Route path="/dashboard" element={<Dashboard />} />
+
+          {/*==================COMMUNITY==============*/}
+          <Route
+  path="/community/:businessId"
+  element={<Community />}
+/>
 
           {/*====================AI COFOUNDER===============*/}
           <Route path="/ai-cofounder" element={<AICofounder />} />

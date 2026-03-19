@@ -169,6 +169,14 @@ export default function Dashboard() {
 
           <hr />
 
+          <button
+  onClick={() =>
+    navigate(`/community/${activeBusiness.id}`)
+  }
+>
+  Community
+</button>
+
 
           {/* COURSES */}
 

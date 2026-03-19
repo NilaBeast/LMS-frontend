@@ -406,6 +406,14 @@ const loadActiveMembership = async () => {
             </button>
           )}
 
+          {token && (
+<button
+onClick={() => navigate(`/community/${activeMembership?.businessId}`)}
+>
+💬 Community
+</button>
+)}
+
           <button onClick={() => navigate("/ai-cofounder")}>
   🤖 AI Cofounder
 </button>
