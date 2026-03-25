@@ -141,7 +141,47 @@ export const createBusinessApi = (data, token) =>
 export const getMyBusinessesApi = (token) =>
   API.get("/api/business/my", authHeader(token));
 
+export const updateBusinessApi = (id, data, token) =>
+  API.put(
+    `/api/business/${id}`,
+    data,
+    multipartHeader(token)
+  );
 
+  /* EMAIL PREFERENCES */
+
+export const getEmailPreferencesApi = (businessId, token) =>
+  API.get(
+    `/api/business-settings/${businessId}/email-preferences`,
+    authHeader(token)
+  );
+
+export const updateEmailPreferencesApi = (businessId, data, token) =>
+  API.put(
+    `/api/business-settings/${businessId}/email-preferences`,
+    data,
+    authHeader(token)
+  );
+
+  /* PIXEL SETTINGS */
+
+export const getPixelSettingsApi = (businessId, token) =>
+  API.get(
+    `/api/pixel-settings/${businessId}/pixel`,
+    authHeader(token)
+  );
+
+export const updatePixelSettingsApi = (businessId, data, token) =>
+  API.put(
+    `/api/pixel-settings/${businessId}/pixel`,
+    data,
+    authHeader(token)
+  );
+
+  export const getPlanUsageApi = (businessId, token) =>
+  API.get(`/api/plan/${businessId}/usage`, authHeader(token));
+
+  
 /* ================= COURSES ================= */
 
 export const createCourseApi = (data, token) =>
@@ -156,8 +196,11 @@ export const deleteCourseApi = (productId, token) =>
     authHeader(token)
   );
 
-export const getMyCoursesApi = (token) =>
-  API.get("/api/courses/my", authHeader(token));
+export const getMyCoursesApi = (token, businessId) =>
+  API.get("/api/courses/my", {
+    ...authHeader(token),
+    params: { businessId },
+  });
 
 
 /* ================= COURSE INFO ================= */
@@ -184,8 +227,11 @@ export const updateEventApi = (id, data, token) =>
 export const deleteEventApi = (id, token) =>
   API.delete(`/api/events/${id}`, authHeader(token));
 
-export const getMyEventsApi = (token) =>
-  API.get("/api/events/my", authHeader(token));
+export const getMyEventsApi = (token, businessId) =>
+  API.get("/api/events/my", {
+    ...authHeader(token),
+    params: { businessId },
+  });
 
 export const getPublicEventsApi = () =>
   API.get("/api/events/public");
@@ -395,8 +441,11 @@ export const updateSessionApi = (id, data, token) =>
 export const deleteSessionApi = (id, token) =>
   API.delete(`/api/sessions/${id}`, authHeader(token));
 
-export const getMySessionsApi = (token) =>
-  API.get("/api/sessions/my", authHeader(token));
+export const getMySessionsApi = (token, businessId) =>
+  API.get("/api/sessions/my", {
+    ...authHeader(token),
+    params: { businessId },
+  });
 
 export const getSessionBookingsApi = (id, token) =>
   API.get(`/api/sessions/${id}/bookings`, authHeader(token));
@@ -437,12 +486,11 @@ export const createDigitalApi = (data, token) =>
   );
 
 /* GET MY DIGITAL FILES */
-export const getMyDigitalsApi = (token) =>
-  API.get(
-    "/api/digital-files/my",
-    authHeader(token)
-  );
-
+export const getMyDigitalsApi = (token, businessId) =>
+  API.get("/api/digital-files/my", {
+    ...authHeader(token),
+    params: { businessId },
+  });
 /* GET SINGLE DIGITAL FILE */
 export const getDigitalApi = (id, token) =>
   API.get(
@@ -561,6 +609,12 @@ export const deletePackageApi = (productId, token) =>
     authHeader(token)
   );
 
+  export const getMyPackagesApi = (token, businessId) =>
+  API.get("/api/packages/my", {
+    ...authHeader(token),
+    params: { businessId },
+  });
+
 export const addCourseToPackageApi = (data, token) =>
   API.post(
     "/api/packages/add-course",
@@ -644,8 +698,11 @@ export const deleteMembershipApi = (id, token) =>
    GET MY MEMBERSHIPS
 ====================================================== */
 
-export const getMyMembershipsApi = (token) =>
-  API.get("/api/memberships/my", authHeader(token));
+export const getMyMembershipsApi = (token, businessId) =>
+  API.get("/api/memberships/my", {
+    ...authHeader(token),
+    params: { businessId },
+  });
 
 
 /* ======================================================

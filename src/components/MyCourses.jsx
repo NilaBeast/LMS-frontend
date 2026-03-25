@@ -7,7 +7,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import EditCourseModal from "./EditCourseModal";
 
-export default function MyCourses({ refresh }) {
+export default function MyCourses({ refresh, businessId }) {
   const { token } = useAuth();
   const navigate = useNavigate();
 
@@ -18,12 +18,19 @@ export default function MyCourses({ refresh }) {
   const PLATFORM_FEE_PERCENT = 5;
 
   useEffect(() => {
-    loadCourses();
-  }, [refresh]);
+  setCourses([]); // 🔥 clear previous business courses
+  if (!businessId) return;
+  loadCourses();
+}, [refresh, businessId]);
 
   const loadCourses = async () => {
-    const res = await getMyCoursesApi(token);
-    setCourses(res.data);
+    try {
+      const res = await getMyCoursesApi(token, businessId);
+      setCourses(res.data || []);
+    } catch (err) {
+      console.error(err);
+      setCourses([]);
+    }
   };
 
   const removeCourse = async (productId) => {

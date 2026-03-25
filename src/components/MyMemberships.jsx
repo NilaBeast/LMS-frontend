@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import EditMembershipModal from "./EditMembershipModal"; // ✅ ADD
 
-export default function MyMemberships({ refresh }) {
+export default function MyMemberships({ refresh, businessId }) {
   const { token } = useAuth();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,9 +17,14 @@ export default function MyMemberships({ refresh }) {
   const [selectedMembership, setSelectedMembership] =
     useState(null);
 
+  useEffect(() => {
+    if (!businessId) return;
+    load();
+  }, [refresh, businessId]);
+
   const load = async () => {
     try {
-      const res = await getMyMembershipsApi(token);
+      const res = await getMyMembershipsApi(token, businessId);
       setData(res.data || []);
     } catch (err) {
       console.error(err);
@@ -27,10 +32,6 @@ export default function MyMemberships({ refresh }) {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    load();
-  }, [refresh]);
 
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this membership?")) return;

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 import EditPackageModal from "./EditPackageModal";
 
-export default function MyPackages({ refresh }) {
+export default function MyPackages({ refresh, businessId }) {
   const { token } = useAuth();
 
   const [packs, setPacks] = useState([]);
@@ -21,8 +21,9 @@ export default function MyPackages({ refresh }) {
   /* ================= LOAD ================= */
 
   useEffect(() => {
+    if (!businessId) return;
     load();
-  }, [refresh]);
+  }, [refresh, businessId]);
 
   const load = async () => {
     try {
@@ -34,14 +35,15 @@ export default function MyPackages({ refresh }) {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          params: {
+            businessId,
+          },
         }
       );
 
       setPacks(res.data || []);
-
     } catch (err) {
-      console.error("LOAD ERROR:", err);
-      alert("Failed to load packages");
+      console.error(err);
     } finally {
       setLoading(false);
     }

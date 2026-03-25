@@ -11,7 +11,7 @@ import {
 import EventCard from "./EventCard";
 import EditEventModal from "./EditEventModal";
 
-export default function MyEvents({ refresh }) {
+export default function MyEvents({ refresh, businessId }) {
 
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -19,17 +19,20 @@ export default function MyEvents({ refresh }) {
   const [events, setEvents] = useState([]);
   const [editing, setEditing] = useState(null);
 
-  /* ================= LOAD ================= */
-
   useEffect(() => {
+    if (!businessId) return;
     load();
-  }, [refresh]);
+  }, [refresh, businessId]);
 
   const load = async () => {
-    const res = await getMyEventsApi(token);
-    setEvents(res.data || []);
+    try {
+      const res = await getMyEventsApi(token, businessId);
+      setEvents(res.data || []);
+    } catch (err) {
+      console.error(err);
+      setEvents([]);
+    }
   };
-
   /* ================= DELETE ================= */
 
   const remove = async (id) => {

@@ -10,7 +10,7 @@ import {
 import EditSessionModal from "./EditSessionModal";
 
 
-export default function MySessions({ refresh }) {
+export default function MySessions({ refresh, businessId }) {
 
   const { token } = useAuth();
   const navigate = useNavigate();
@@ -18,22 +18,16 @@ export default function MySessions({ refresh }) {
   const [sessions, setSessions] = useState([]);
   const [edit, setEdit] = useState(null);
 
-
   useEffect(() => {
+    if (!businessId) return;
     load();
-  }, [refresh]);
-
+  }, [refresh, businessId]);
 
   const load = async () => {
-
     try {
-
-      const res = await getMySessionsApi(token);
-
+      const res = await getMySessionsApi(token, businessId);
       setSessions(res.data || []);
-
     } catch (err) {
-
       console.error(err);
       setSessions([]);
     }

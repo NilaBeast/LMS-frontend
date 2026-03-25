@@ -12,6 +12,9 @@ import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/Login";
 import { Register } from "./pages/Register";
 
+/*=================BUSINESS=================*/
+import BusinessSettings from "./pages/BusinessSettings";
+
 /* ================= COURSES ================= */
 
 import Courses from "./pages/Courses";
@@ -81,6 +84,12 @@ export default function App() {
             path="/"
             element={<Navigate to="/courses" />}
           />
+
+          {/* BUSINESS SETTINGS */}
+<Route
+  path="/business/:businessId/settings"
+  element={<BusinessSettings />}
+/>
 
           {/* ================= PUBLIC ================= */}
 

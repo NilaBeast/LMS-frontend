@@ -15,22 +15,26 @@ import EditDigitalModal from "./EditDigitalModal";
 const GST_PERCENT = 18;
 const PLATFORM_FEE_PERCENT = 5;
 
-export default function MyDigitalFiles({ refresh }) {
+export default function MyDigitalFiles({ refresh, businessId }) {
   const { token } = useAuth();
   const nav = useNavigate();
 
   const [files, setFiles] = useState([]);
-
-  /* ✅ NEW */
   const [editFile, setEditFile] = useState(null);
 
   useEffect(() => {
+    if (!businessId) return;
     load();
-  }, [refresh]);
+  }, [refresh, businessId]);
 
   const load = async () => {
-    const res = await getMyDigitalsApi(token);
-    setFiles(res.data || []);
+    try {
+      const res = await getMyDigitalsApi(token, businessId);
+      setFiles(res.data || []);
+    } catch (err) {
+      console.error(err);
+      setFiles([]);
+    }
   };
 
   const del = async (id) => {

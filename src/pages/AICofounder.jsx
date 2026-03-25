@@ -156,17 +156,23 @@ useEffect(() => {
 
   } catch (err) {
 
-    console.error(err);
+  console.error(err);
 
-    setMessages(prev => [
-      ...prev,
-      {
-        role: "assistant",
-        content: "AI generation failed"
-      }
-    ]);
+  let errorMessage = "AI generation failed";
 
-  } finally {
+  if (err.response?.data?.message) {
+    errorMessage = err.response.data.message;
+  }
+
+  setMessages(prev => [
+    ...prev,
+    {
+      role: "assistant",
+      content: errorMessage
+    }
+  ]);
+
+} finally {
 
     setLoading(false);
     setInput("");
